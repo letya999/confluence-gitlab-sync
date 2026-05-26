@@ -18,6 +18,34 @@ Sync Markdown documentation from local folders or GitLab repositories into Confl
 $skill-installer install https://github.com/<org>/<repo>/tree/<ref>/skills/confluence-gitlab-sync
 ```
 
+## Install skill in CLI hosts
+
+Use this skill path from the repo:
+- `skills/confluence-gitlab-sync`
+
+### Codex CLI
+
+```bash
+$skill-installer install https://github.com/letya999/confluence-gitlab-sync/tree/main/skills/confluence-gitlab-sync
+```
+
+Then restart Codex session.
+
+### Claude Code CLI
+
+1. Add the skill folder to your Claude skills directory.
+2. Register MCP server using the same config from:
+   - `skills/confluence-gitlab-sync/references/mcp_config_template.json`
+3. Restart Claude Code CLI.
+
+### Antigravity CLI
+
+1. Import/install skill from:
+   - `https://github.com/letya999/confluence-gitlab-sync/tree/main/skills/confluence-gitlab-sync`
+2. Add MCP server entry (`command`, `args`, `env`) using the template:
+   - `skills/confluence-gitlab-sync/references/mcp_config_template.json`
+3. Restart Antigravity CLI.
+
 ## MCP server install and run
 
 ### Option A: npm/npx launcher
