@@ -1,0 +1,5 @@
+version: 1
+display_name: Confluence GitLab Sync
+short_description: Plan and sync local or GitLab Markdown docs into Confluence via MCP.
+default_prompt: Run smoke check, validate links, plan sync, then dry-run and apply Confluence sync under the selected parent page.
+

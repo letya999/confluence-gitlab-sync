@@ -1,0 +1,52 @@
+{
+  "_template": "Replace all ${...} placeholders before use.",
+  "mcpServers": {
+    "confluence-gitlab-sync": {
+      "command": "${MCP_COMMAND}",
+      "args": [
+        "${MCP_ARG_1}",
+        "${MCP_ARG_2}",
+        "${MCP_ARG_3}",
+        "${MCP_ARG_4}"
+      ],
+      "env": {
+        "PYTHONUTF8": "1",
+        "CONFLUENCE_BASE_URL": "${CONFLUENCE_BASE_URL}",
+        "CONFLUENCE_SPACE_KEY": "${CONFLUENCE_SPACE_KEY}",
+        "CONFLUENCE_PARENT_PAGE_ID": "${CONFLUENCE_PARENT_PAGE_ID}",
+        "CONFLUENCE_USERNAME": "${CONFLUENCE_USERNAME}",
+        "CONFLUENCE_API_TOKEN": "${CONFLUENCE_API_TOKEN}",
+        "GITLAB_ENABLED": "${GITLAB_ENABLED}",
+        "GITLAB_BASE_URL": "${GITLAB_BASE_URL}",
+        "GITLAB_TOKEN": "${GITLAB_TOKEN}",
+        "GITLAB_PROJECT_ID": "${GITLAB_PROJECT_ID}",
+        "GITLAB_REF": "${GITLAB_REF}",
+        "GITLAB_DOCS_PATH": "${GITLAB_DOCS_PATH}"
+      }
+    }
+  },
+  "_examples": {
+    "windows_powershell": {
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "C:\\\\path\\\\to\\\\repo\\\\skills\\\\confluence-gitlab-sync\\\\tools\\\\confluence_sync\\\\scripts\\\\run_server_venv.ps1"
+      ]
+    },
+    "cross_platform_python_module": {
+      "command": "python",
+      "args": [
+        "-m",
+        "confluence_sync.server"
+      ]
+    },
+    "macos_linux_bash": {
+      "command": "bash",
+      "args": [
+        "/path/to/repo/skills/confluence-gitlab-sync/tools/confluence_sync/scripts/run_server_venv.sh"
+      ]
+    }
+  }
+}
