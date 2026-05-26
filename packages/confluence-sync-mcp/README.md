@@ -8,6 +8,14 @@ Python MCP server for syncing Markdown docs from local folders or GitLab repos i
 $skill-installer install https://github.com/<org>/<repo>/tree/<ref>/skills/confluence-gitlab-sync
 ```
 
+## npm launcher (optional runtime)
+
+```bash
+npx -y confluence-sync-mcp-npm@0.1.0
+```
+
+The launcher bootstraps a Python venv and starts `confluence_sync.server`.
+
 ## Setup
 
 ```bash

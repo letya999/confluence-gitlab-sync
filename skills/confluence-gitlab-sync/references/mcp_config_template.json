@@ -29,6 +29,7 @@
     "windows_powershell": {
       "command": "powershell",
       "args": [
+        "-NoProfile",
         "-ExecutionPolicy",
         "Bypass",
         "-File",
@@ -46,6 +47,13 @@
       "command": "bash",
       "args": [
         "/path/to/repo/packages/confluence-sync-mcp/scripts/run_server_venv.sh"
+      ]
+    },
+    "npm_npx_launcher": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "confluence-sync-mcp-npm@0.1.0"
       ]
     }
   }

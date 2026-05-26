@@ -1,0 +1,29 @@
+﻿{
+  "name": "confluence-sync-mcp-npm",
+  "version": "0.1.0",
+  "description": "Node launcher for the confluence-sync-mcp Python MCP server",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "confluence-sync-mcp": "bin/confluence-sync-mcp.js"
+  },
+  "files": [
+    "bin",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "confluence",
+    "gitlab",
+    "markdown",
+    "docs-sync"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<org>/<repo>.git",
+    "directory": "packages/confluence-sync-mcp-npm"
+  }
+}

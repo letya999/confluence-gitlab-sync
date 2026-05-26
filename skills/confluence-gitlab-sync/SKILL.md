@@ -1,4 +1,4 @@
-﻿---
+---
 name: confluence-gitlab-sync
 description: Sync Markdown documentation from local folders or GitLab repositories into Confluence via MCP tools, including dry-run planning, hierarchy creation, link validation, attachment upload, and safe apply. Use for Confluence migrations, ongoing docs sync, or GitLab-to-Confluence publishing workflows.
 ---
@@ -14,13 +14,22 @@ description: Sync Markdown documentation from local folders or GitLab repositori
 
 ## Install (usual Codex way)
 
-Skills are installed via `$skill-installer` (not via npm).
+Skill definition is installed via `$skill-installer`. MCP runtime can be provided either by Python package or npm launcher.
 
 ```text
 $skill-installer install https://github.com/<org>/<repo>/tree/<ref>/skills/confluence-gitlab-sync
 ```
 
 After install: restart Codex.
+
+## Runtime launcher options
+
+- Python native:
+  - `python -m confluence_sync.server`
+  - or `confluence-sync-mcp` after Python package install
+- npm launcher:
+  - `npx -y confluence-sync-mcp-npm@<version>`
+  - launcher creates venv, installs Python runtime, starts server
 
 ## MCP server runtime
 
@@ -30,7 +39,7 @@ Server lives at:
 Start manually from repo root:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File packages/confluence-sync-mcp/scripts/run_server_venv.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File packages/confluence-sync-mcp/scripts/run_server_venv.ps1
 ```
 
 ```bash

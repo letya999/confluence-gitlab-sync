@@ -14,8 +14,8 @@ else
 fi
 
 if [ ! -x "$VENV_DIR/bin/python" ]; then
-  "$PYTHON_BIN" -m venv "$VENV_DIR"
+  "$PYTHON_BIN" -m venv "$VENV_DIR" >&2
 fi
 
-"$VENV_DIR/bin/python" -m pip install -e "$ROOT_DIR"
+"$VENV_DIR/bin/python" -m pip install -e "$ROOT_DIR" >&2
 "$VENV_DIR/bin/python" -m confluence_sync.server

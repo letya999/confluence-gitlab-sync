@@ -17,7 +17,7 @@ from .sync_service import (
     validate_document_links,
 )
 
-mcp = FastMCP("confluence-sync-mcp", json_response=True)
+mcp = FastMCP("confluence-sync-mcp")
 
 
 @mcp.tool()
@@ -401,7 +401,7 @@ def migration_operator_prompt(task: str, source: str = "local") -> str:
 
 
 def main() -> None:
-    mcp.run()
+    mcp.run(transport="stdio")
 
 
 if __name__ == "__main__":
