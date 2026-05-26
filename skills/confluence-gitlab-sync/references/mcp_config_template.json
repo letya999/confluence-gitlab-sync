@@ -1,4 +1,4 @@
-{
+﻿{
   "_template": "Replace all ${...} placeholders before use.",
   "mcpServers": {
     "confluence-gitlab-sync": {
@@ -32,7 +32,7 @@
         "-ExecutionPolicy",
         "Bypass",
         "-File",
-        "C:\\\\path\\\\to\\\\repo\\\\skills\\\\confluence-gitlab-sync\\\\tools\\\\confluence_sync\\\\scripts\\\\run_server_venv.ps1"
+        "C:\\\\path\\\\to\\\\repo\\\\packages\\\\confluence-sync-mcp\\\\scripts\\\\run_server_venv.ps1"
       ]
     },
     "cross_platform_python_module": {
@@ -45,8 +45,9 @@
     "macos_linux_bash": {
       "command": "bash",
       "args": [
-        "/path/to/repo/skills/confluence-gitlab-sync/tools/confluence_sync/scripts/run_server_venv.sh"
+        "/path/to/repo/packages/confluence-sync-mcp/scripts/run_server_venv.sh"
       ]
     }
   }
 }
+

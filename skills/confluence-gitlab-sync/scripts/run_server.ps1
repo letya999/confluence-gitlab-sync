@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-Push-Location "$PSScriptRoot\..\tools\confluence_sync"
+Push-Location "$PSScriptRoot\..\..\..\packages\confluence-sync-mcp"
 try {
   confluence-sync-mcp
 }

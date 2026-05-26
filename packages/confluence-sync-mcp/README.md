@@ -1,4 +1,4 @@
-# Confluence Sync MCP
+﻿# Confluence Sync MCP
 
 Python MCP server for syncing Markdown docs from local folders or GitLab repos into Confluence.
 
@@ -11,7 +11,7 @@ $skill-installer install https://github.com/<org>/<repo>/tree/<ref>/skills/confl
 ## Setup
 
 ```bash
-cd skills/confluence-gitlab-sync/tools/confluence_sync
+cd packages/confluence-sync-mcp
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -e .
@@ -21,7 +21,7 @@ cp .env.example .env
 ## Run server
 
 ```bash
-cd skills/confluence-gitlab-sync/tools/confluence_sync
+cd packages/confluence-sync-mcp
 confluence-sync-mcp
 ```
 
@@ -49,7 +49,7 @@ python -m confluence_sync.server
 ## Bootstrap env
 
 ```bash
-cd skills/confluence-gitlab-sync/tools/confluence_sync
+cd packages/confluence-sync-mcp
 python scripts/bootstrap_env_from_sources.py --source-env /path/to/source/.env
 ```
 
@@ -62,7 +62,7 @@ Optional flags:
 ## One-shot commands
 
 ```bash
-cd skills/confluence-gitlab-sync/tools/confluence_sync
+cd packages/confluence-sync-mcp
 py -3 scripts/sync_once.py --source local --dry-run
 py -3 scripts/sync_once.py --source local --target-page-id 997654544
 py -3 scripts/export_once.py --page-id 123456 --space-key ARCH --output-dir .tmp_export --mode markdown_with_assets
@@ -71,6 +71,7 @@ py -3 scripts/export_once.py --page-id 123456 --space-key ARCH --output-dir .tmp
 ## Test
 
 ```bash
-cd skills/confluence-gitlab-sync/tools/confluence_sync
+cd packages/confluence-sync-mcp
 py -3 -m pytest -q
 ```
+

@@ -6,10 +6,10 @@
 
 ## Что в репозитории
 
-- `SKILL.md`: описание скилла и рабочий сценарий оператора.
-- `tools/confluence_sync`: Python-реализация MCP-сервера.
-- `references/mcp_config_template.json`: шаблон конфигурации MCP-клиента.
-- `scripts/run_server.*`: скрипты запуска сервера.
+- `skills/confluence-gitlab-sync/SKILL.md`: описание скилла и рабочий сценарий оператора.
+- `packages/confluence-sync-mcp`: Python-реализация MCP-сервера.
+- `skills/confluence-gitlab-sync/references/mcp_config_template.json`: шаблон конфигурации MCP-клиента.
+- `skills/confluence-gitlab-sync/scripts/run_server.*`: скрипты запуска сервера.
 
 ## Установка в Codex
 
@@ -20,7 +20,7 @@ $skill-installer install https://github.com/<org>/<repo>/tree/<ref>/skills/confl
 ## Быстрый локальный старт
 
 ```bash
-cd tools/confluence_sync
+cd packages/confluence-sync-mcp
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -e .[dev]

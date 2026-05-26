@@ -1,4 +1,4 @@
----
+﻿---
 name: confluence-gitlab-sync
 description: Sync Markdown documentation from local folders or GitLab repositories into Confluence via MCP tools, including dry-run planning, hierarchy creation, link validation, attachment upload, and safe apply. Use for Confluence migrations, ongoing docs sync, or GitLab-to-Confluence publishing workflows.
 ---
@@ -25,21 +25,21 @@ After install: restart Codex.
 ## MCP server runtime
 
 Server lives at:
-- `skills/confluence-gitlab-sync/tools/confluence_sync`
+- `packages/confluence-sync-mcp`
 
 Start manually from repo root:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File skills/confluence-gitlab-sync/tools/confluence_sync/scripts/run_server_venv.ps1
+powershell -ExecutionPolicy Bypass -File packages/confluence-sync-mcp/scripts/run_server_venv.ps1
 ```
 
 ```bash
-bash skills/confluence-gitlab-sync/tools/confluence_sync/scripts/run_server_venv.sh
+bash packages/confluence-sync-mcp/scripts/run_server_venv.sh
 ```
 
 ## MCP client config
 
-Use `references/mcp_config_template.json` as parameterized template and replace placeholders.
+Use `skills/confluence-gitlab-sync/references/mcp_config_template.json` as parameterized template and replace placeholders.
 
 ## Recommended operator flow
 
@@ -76,9 +76,11 @@ Use `references/mcp_config_template.json` as parameterized template and replace 
 - Use `selected_doc_relative_path` to explicitly choose source markdown when ambiguity is reported.
 - Use `intent_text` to communicate user intent (for example, explicit rename intent).
 - Use `export_from_confluence(...)` to produce markdown-only, markdown+PUML, or markdown+attachments bundles for local docs or GitLab docs folders.
-- For converter behavior, edit `skills/confluence-gitlab-sync/tools/confluence_sync/src/confluence_sync/formatter.py`.
+- For converter behavior, edit `packages/confluence-sync-mcp/src/confluence_sync/formatter.py`.
 - Bootstrap `.env` from existing local configs:
 
 ```powershell
-python skills/confluence-gitlab-sync/tools/confluence_sync/scripts/bootstrap_env_from_sources.py
+python packages/confluence-sync-mcp/scripts/bootstrap_env_from_sources.py
 ```
+
+

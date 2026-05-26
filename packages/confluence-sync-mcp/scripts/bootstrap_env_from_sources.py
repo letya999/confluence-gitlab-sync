@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import os
@@ -41,7 +41,7 @@ def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Bootstrap confluence_sync .env from existing env/config files")
     parser.add_argument("--source-env", default="", help="Path to source .env with Jira/Confluence values")
     parser.add_argument("--codex-config", default="", help="Path to Codex config.toml with GitLab MCP values")
-    parser.add_argument("--out", default="", help="Output .env path (defaults to tools/confluence_sync/.env)")
+    parser.add_argument("--out", default="", help="Output .env path (defaults to packages/confluence-sync-mcp/.env)")
     parser.add_argument(
         "--local-docs-path",
         default="./docs",
@@ -95,4 +95,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 

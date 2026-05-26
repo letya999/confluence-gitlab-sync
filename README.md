@@ -6,10 +6,10 @@ Sync Markdown documentation from local folders or GitLab repositories into Confl
 
 ## What this repository contains
 
-- `SKILL.md`: skill definition and operator workflow.
-- `tools/confluence_sync`: Python MCP server implementation.
-- `references/mcp_config_template.json`: MCP client config template.
-- `scripts/run_server.*`: server startup wrappers.
+- `skills/confluence-gitlab-sync/SKILL.md`: skill definition and operator workflow.
+- `packages/confluence-sync-mcp`: Python MCP server implementation.
+- `skills/confluence-gitlab-sync/references/mcp_config_template.json`: MCP client config template.
+- `skills/confluence-gitlab-sync/scripts/run_server.*`: server startup wrappers.
 
 ## Install in Codex
 
@@ -20,7 +20,7 @@ $skill-installer install https://github.com/<org>/<repo>/tree/<ref>/skills/confl
 ## Quick start for local development
 
 ```bash
-cd tools/confluence_sync
+cd packages/confluence-sync-mcp
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -e .[dev]
