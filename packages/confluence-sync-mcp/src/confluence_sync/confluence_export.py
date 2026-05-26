@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from html import unescape
 from pathlib import Path
-import re
 from typing import Any
 
 from .confluence_client import ConfluenceClient

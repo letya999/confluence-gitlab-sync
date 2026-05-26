@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from html import escape
-from urllib.parse import quote, unquote
 import base64
 import uuid
 import zlib
+from html import escape
+from urllib.parse import quote, unquote
 
 from .config import ConfluenceConfig
 

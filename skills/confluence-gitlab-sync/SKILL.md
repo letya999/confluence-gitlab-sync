@@ -50,6 +50,16 @@ bash packages/confluence-sync-mcp/scripts/run_server_venv.sh
 
 Use `skills/confluence-gitlab-sync/references/mcp_config_template.json` as parameterized template and replace placeholders.
 
+Common launcher choices:
+- `npx -y confluence-sync-mcp-npm@0.1.0`
+- `python -m confluence_sync.server`
+- `powershell -File packages/confluence-sync-mcp/scripts/run_server_venv.ps1`
+- `bash packages/confluence-sync-mcp/scripts/run_server_venv.sh`
+
+Credential sources:
+- Confluence: Atlassian account email + API token, base URL, space key, parent page id.
+- GitLab: base URL, Personal Access Token (`read_api`), project id, ref, docs path.
+
 ## Recommended operator flow
 
 1. `smoke_check(...)`

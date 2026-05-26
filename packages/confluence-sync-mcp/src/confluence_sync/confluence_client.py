@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from difflib import SequenceMatcher
-import re
 from typing import Any
 
 import requests
@@ -29,7 +29,10 @@ class ConfluenceClient:
     def _request(self, method: str, path: str, **kwargs: Any) -> dict[str, Any]:
         resp = self.session.request(method, f"{self.base}{path}", timeout=60, **kwargs)
         resp.raise_for_status()
-        return resp.json()
+        payload = resp.json()
+        if not isinstance(payload, dict):
+            raise ValueError("Confluence API returned non-object JSON payload")
+        return payload
 
     def find_page_by_title(self, title: str) -> dict[str, Any] | None:
         payload = self._request(

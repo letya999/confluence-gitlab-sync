@@ -1,30 +1,31 @@
 from __future__ import annotations
 
+import re
+from collections.abc import Callable
 from dataclasses import asdict
 from difflib import SequenceMatcher
-from typing import Any, Callable
-import re
+from typing import Any
 
 from .config import AppConfig
+from .confluence_client import ConfluenceClient
 from .content_processing import (
     extract_image_links,
     extract_markdown_links,
     prepare_markdown_for_confluence,
     resolve_relative_markdown_path,
 )
-from .confluence_client import ConfluenceClient
 from .formatter import markdown_to_confluence_storage
 from .gitlab_client import GitLabClient
 from .intent import wants_rename
 from .matching import rank_documents_for_page_payload
 from .models import SourceDocument
-from .storage_merge import merge_storage_preserving_style
 from .sources import (
     load_gitlab_markdown_docs,
     load_local_markdown_docs,
     read_gitlab_asset_bytes,
     read_local_asset_bytes,
 )
+from .storage_merge import merge_storage_preserving_style
 from .sync_meta import (
     build_confluence_sync_storage_block,
     build_markdown_sync_block,
@@ -261,7 +262,6 @@ def sync_documents(
             patch_info = {"mode": "replace", "risk_score": 0.0, "details": "new or non-targeted page update"}
 
         parent_id = confluence.ensure_hierarchy(doc.relative_path, base_parent_id=effective_parent)
-        current_page_id = target_page_id if (target_page_id and len(docs) == 1) else page_id
         source_project = ""
         source_ref = ""
         source_root = str(cfg.local_docs_path)

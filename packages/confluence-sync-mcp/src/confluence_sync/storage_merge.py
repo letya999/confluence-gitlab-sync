@@ -3,7 +3,6 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-
 _H_RE = re.compile(r"(<h([1-6])[^>]*>.*?</h\2>)", flags=re.IGNORECASE | re.DOTALL)
 _TAG_RE = re.compile(r"<[^>]+>")
 _MACRO_RE = re.compile(r"<ac:structured-macro\b|<ac:adf-extension\b", flags=re.IGNORECASE)

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import re
 
-
 _RENAME_PATTERNS = [
     re.compile(r"\brename\b", flags=re.IGNORECASE),
     re.compile(r"\bretitle\b", flags=re.IGNORECASE),

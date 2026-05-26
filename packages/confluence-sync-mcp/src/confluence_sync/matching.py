@@ -7,7 +7,6 @@ from typing import Any
 
 from .models import SourceDocument
 
-
 _TOKEN_RE = re.compile(r"[A-Za-z0-9\u0400-\u04FF_]+", flags=re.UNICODE)
 _HEADING_RE = re.compile(r"^\s{0,3}#{1,3}\s+(.+?)\s*$", flags=re.MULTILINE)
 

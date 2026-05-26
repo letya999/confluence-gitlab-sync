@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pathlib import Path
 import posixpath
+from pathlib import Path
 
 from .gitlab_client import GitLabClient
 from .models import SourceDocument, title_from_path
