@@ -51,7 +51,7 @@ bash packages/confluence-sync-mcp/scripts/run_server_venv.sh
 Use `skills/confluence-gitlab-sync/references/mcp_config_template.json` as parameterized template and replace placeholders.
 
 Common launcher choices:
-- `npx -y confluence-sync-mcp-npm@0.1.0`
+- `npx -y confluence-sync-mcp-npm@0.1.1`
 - `python -m confluence_sync.server`
 - `powershell -File packages/confluence-sync-mcp/scripts/run_server_venv.ps1`
 - `bash packages/confluence-sync-mcp/scripts/run_server_venv.sh`

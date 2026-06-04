@@ -11,7 +11,7 @@ $skill-installer install https://github.com/<org>/<repo>/tree/<ref>/skills/confl
 ## npm launcher (optional runtime)
 
 ```bash
-npx -y confluence-sync-mcp-npm@0.1.0
+npx -y confluence-sync-mcp-npm@0.1.1
 ```
 
 The launcher bootstraps a Python venv and starts `confluence_sync.server`.

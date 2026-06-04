@@ -54,7 +54,7 @@ Then restart Codex session.
 2. Run MCP server:
 
 ```bash
-npx -y confluence-sync-mcp-npm@0.1.0
+npx -y confluence-sync-mcp-npm@0.1.1
 ```
 
 This launcher bootstraps Python runtime and starts `confluence_sync.server`.
@@ -81,7 +81,7 @@ Use the template:
 - `skills/confluence-gitlab-sync/references/mcp_config_template.json`
 
 Minimal command variants:
-- `npx -y confluence-sync-mcp-npm@0.1.0`
+- `npx -y confluence-sync-mcp-npm@0.1.1`
 - `python -m confluence_sync.server`
 - `powershell -File packages/confluence-sync-mcp/scripts/run_server_venv.ps1`
 - `bash packages/confluence-sync-mcp/scripts/run_server_venv.sh`
@@ -93,7 +93,7 @@ Example `mcpServers` block (works for hosts that use MCP JSON config):
   "mcpServers": {
     "confluence-gitlab-sync": {
       "command": "npx",
-      "args": ["-y", "confluence-sync-mcp-npm@0.1.0"],
+      "args": ["-y", "confluence-sync-mcp-npm@0.1.1"],
       "env": {
         "PYTHONUTF8": "1",
         "CONFLUENCE_BASE_URL": "https://your-org.atlassian.net/wiki",

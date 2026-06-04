@@ -39,6 +39,6 @@ npm install -g ./packages/confluence-sync-mcp-npm
 ```json
 {
   "command": "npx",
-  "args": ["-y", "confluence-sync-mcp-npm@0.1.0"]
+  "args": ["-y", "confluence-sync-mcp-npm@0.1.1"]
 }
 ```

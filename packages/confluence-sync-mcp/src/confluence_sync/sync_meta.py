@@ -63,7 +63,7 @@ def write_markdown_sync_block(path: str | Path, block: str) -> None:
 
 def upsert_confluence_sync_storage_block(storage_html: str, block: str) -> str:
     if _START in storage_html and _END in storage_html:
-        return _STORAGE_BLOCK_RE.sub(block, storage_html, count=1)
+        return _STORAGE_BLOCK_RE.sub(lambda _: block, storage_html, count=1)
 
     legacy_match = list(_LEGACY_SYNC_INFO_RE.finditer(storage_html))
     if legacy_match:

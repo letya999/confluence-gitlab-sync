@@ -1,6 +1,6 @@
 [project]
 name = "confluence-sync-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server for syncing local/GitLab docs to Confluence with formatting"
 readme = "README.md"
 requires-python = ">=3.11"
