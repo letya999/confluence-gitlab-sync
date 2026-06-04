@@ -46,6 +46,29 @@ class ConfluenceClient:
     def get_page_by_id(self, page_id: str, expand: str = "version,title,_links") -> dict[str, Any]:
         return self._request("GET", f"/rest/api/content/{page_id}", params={"expand": expand})
 
+    def get_content_property(self, page_id: str, key: str) -> dict[str, Any] | None:
+        resp = self.session.get(f"{self.base}/rest/api/content/{page_id}/property/{key}", timeout=60)
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+        payload = resp.json()
+        if not isinstance(payload, dict):
+            raise ValueError("Confluence API returned non-object JSON payload")
+        return payload
+
+    def set_content_property(self, page_id: str, key: str, value: dict[str, Any]) -> dict[str, Any]:
+        existing = self.get_content_property(page_id, key)
+        if existing:
+            body = {
+                "key": key,
+                "value": value,
+                "version": {"number": int(existing.get("version", {}).get("number", 0)) + 1},
+            }
+            return self._request("PUT", f"/rest/api/content/{page_id}/property/{key}", json=body)
+
+        body = {"key": key, "value": value}
+        return self._request("POST", f"/rest/api/content/{page_id}/property", json=body)
+
     def find_page_by_title_in_space(self, title: str) -> dict[str, Any] | None:
         return self.find_page_by_title(title)
 

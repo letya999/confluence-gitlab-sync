@@ -27,8 +27,11 @@ from .sources import (
 )
 from .storage_merge import merge_storage_preserving_style
 from .sync_meta import (
+    CONTENT_PROPERTY_KEY,
+    build_confluence_sync_property_value,
     build_confluence_sync_storage_block,
     build_markdown_sync_block,
+    upsert_confluence_sync_storage_block,
     write_markdown_sync_block,
 )
 
@@ -277,7 +280,7 @@ def sync_documents(
             source_ref=source_ref,
             confluence_updated_at="",
         )
-        final_storage = storage + f"\n{sync_block}"
+        final_storage = upsert_confluence_sync_storage_block(storage, sync_block)
         upserted = confluence.upsert_page(
             doc.title,
             final_storage,
@@ -286,6 +289,20 @@ def sync_documents(
             semantic_hints=_semantic_hints(doc),
             semantic_match=semantic_match,
             preserve_existing_title=preserve_title,
+        )
+        confluence.set_content_property(
+            upserted.page_id,
+            CONTENT_PROPERTY_KEY,
+            build_confluence_sync_property_value(
+                source_type=source,
+                source_root=source_root,
+                source_relative_path=doc.relative_path.replace("\\", "/"),
+                space_key=cfg.confluence.space_key,
+                source_project=source_project,
+                source_ref=source_ref,
+                confluence_page_id=upserted.page_id,
+                confluence_page_url=upserted.url,
+            ),
         )
         md_sync_updated = False
         if doc.source == "local":
