@@ -41,9 +41,30 @@ jobs:
           fi
           echo "version=$TAG" >> "$GITHUB_OUTPUT"
 
+  check-release-config:
+    runs-on: ubuntu-latest
+    outputs:
+      has_npm_token: ${{ steps.check.outputs.has_npm_token }}
+    steps:
+      - name: Check release credentials
+        id: check
+        shell: bash
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -n "${NPM_TOKEN:-}" ]]; then
+            echo "has_npm_token=true" >> "$GITHUB_OUTPUT"
+            echo "NPM_TOKEN is configured."
+          else
+            echo "has_npm_token=false" >> "$GITHUB_OUTPUT"
+            echo "NPM_TOKEN is not configured. npm publish job will be skipped."
+          fi
+
   publish-pypi:
     needs: validate-tag-version
     runs-on: ubuntu-latest
+    environment: pypi
     permissions:
       id-token: write
     steps:
@@ -67,7 +88,10 @@ jobs:
           packages-dir: packages/confluence-sync-mcp/dist
 
   publish-npm:
-    needs: validate-tag-version
+    needs:
+      - validate-tag-version
+      - check-release-config
+    if: needs.check-release-config.outputs.has_npm_token == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
