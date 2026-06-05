@@ -44,15 +44,32 @@ jobs:
   check-release-config:
     runs-on: ubuntu-latest
     outputs:
+      has_pypi_publish: ${{ steps.check.outputs.has_pypi_publish }}
+      pypi_mode: ${{ steps.check.outputs.pypi_mode }}
       has_npm_token: ${{ steps.check.outputs.has_npm_token }}
     steps:
       - name: Check release credentials
         id: check
         shell: bash
         env:
+          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+          PYPI_TRUSTED_PUBLISHING: ${{ vars.PYPI_TRUSTED_PUBLISHING }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -euo pipefail
+          if [[ -n "${PYPI_API_TOKEN:-}" ]]; then
+            echo "has_pypi_publish=true" >> "$GITHUB_OUTPUT"
+            echo "pypi_mode=token" >> "$GITHUB_OUTPUT"
+            echo "PYPI_API_TOKEN is configured."
+          elif [[ "${PYPI_TRUSTED_PUBLISHING:-false}" == "true" ]]; then
+            echo "has_pypi_publish=true" >> "$GITHUB_OUTPUT"
+            echo "pypi_mode=trusted" >> "$GITHUB_OUTPUT"
+            echo "PyPI trusted publishing is enabled via repository variable."
+          else
+            echo "has_pypi_publish=false" >> "$GITHUB_OUTPUT"
+            echo "pypi_mode=disabled" >> "$GITHUB_OUTPUT"
+            echo "PyPI publish is disabled. Set PYPI_API_TOKEN or PYPI_TRUSTED_PUBLISHING=true to enable it."
+          fi
           if [[ -n "${NPM_TOKEN:-}" ]]; then
             echo "has_npm_token=true" >> "$GITHUB_OUTPUT"
             echo "NPM_TOKEN is configured."
@@ -62,7 +79,10 @@ jobs:
           fi
 
   publish-pypi:
-    needs: validate-tag-version
+    needs:
+      - validate-tag-version
+      - check-release-config
+    if: needs.check-release-config.outputs.has_pypi_publish == 'true'
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
@@ -82,7 +102,15 @@ jobs:
           python -m pip install --upgrade pip build
           python -m build
 
-      - name: Publish to PyPI
+      - name: Publish to PyPI with API token
+        if: needs.check-release-config.outputs.pypi_mode == 'token'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: packages/confluence-sync-mcp/dist
+          password: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Publish to PyPI with trusted publishing
+        if: needs.check-release-config.outputs.pypi_mode == 'trusted'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: packages/confluence-sync-mcp/dist
