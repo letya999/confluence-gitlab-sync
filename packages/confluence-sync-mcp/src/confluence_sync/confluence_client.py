@@ -18,13 +18,31 @@ class UpsertResult:
     url: str
 
 
+@dataclass(frozen=True)
+class MermaidExtension:
+    extension_key: str
+    extension_id: str
+    extension_title: str
+
+
 class ConfluenceClient:
+    _MERMAID_EXTENSION_RE = re.compile(
+        r"<ac:adf-extension>.*?"
+        r"<ac:adf-attribute key=\"extension-key\">(?P<key>.*?)</ac:adf-attribute>.*?"
+        r"<ac:adf-parameter key=\"extension-id\">(?P<id>.*?)</ac:adf-parameter>.*?"
+        r"<ac:adf-parameter key=\"extension-title\">(?P<title>.*?)</ac:adf-parameter>.*?"
+        r"<ac:adf-parameter key=\"diagram-source\">(?P<source>.*?)</ac:adf-parameter>.*?"
+        r"</ac:adf-extension>",
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+
     def __init__(self, cfg: ConfluenceConfig) -> None:
         self.cfg = cfg
         self.base = cfg.base_url.rstrip("/")
         self.session = requests.Session()
         self.session.auth = (cfg.username, cfg.api_token)
         self.session.headers.update({"Accept": "application/json", "Content-Type": "application/json"})
+        self._mermaid_extension_cache: MermaidExtension | None | bool = False
 
     def _request(self, method: str, path: str, **kwargs: Any) -> dict[str, Any]:
         resp = self.session.request(method, f"{self.base}{path}", timeout=60, **kwargs)
@@ -119,6 +137,44 @@ class ConfluenceClient:
                 }
             )
         return rows
+
+    @classmethod
+    def _extract_mermaid_extension(cls, storage_html: str) -> MermaidExtension | None:
+        match = cls._MERMAID_EXTENSION_RE.search(storage_html)
+        if not match:
+            return None
+        source = match.group("source")
+        if not source.strip():
+            return None
+        return MermaidExtension(
+            extension_key=match.group("key").strip(),
+            extension_id=match.group("id").strip(),
+            extension_title=match.group("title").strip() or "Mermaid Diagram",
+        )
+
+    def discover_mermaid_extension(self, limit: int = 25) -> MermaidExtension | None:
+        if self._mermaid_extension_cache is not False:
+            return self._mermaid_extension_cache or None
+
+        payload = self._request(
+            "GET",
+            "/rest/api/search",
+            params={
+                "cql": 'type=page and siteSearch ~ "mermaid"',
+                "limit": min(max(limit, 1), 100),
+                "expand": "content.body.storage,content.title",
+            },
+        )
+        for item in payload.get("results", []):
+            content = item.get("content", {})
+            storage_html = str(content.get("body", {}).get("storage", {}).get("value", ""))
+            discovered = self._extract_mermaid_extension(storage_html)
+            if discovered:
+                self._mermaid_extension_cache = discovered
+                return discovered
+
+        self._mermaid_extension_cache = None
+        return None
 
     def find_best_semantic_page_match(
         self,

@@ -15,7 +15,7 @@ class ConfluenceConfig:
     parent_page_id: str | None
     username: str
     api_token: str
-    mermaid_mode: str = "svg"
+    mermaid_mode: str = "auto"
     mermaid_macro_name: str = "mermaid-cloud"
     mermaid_extension_key: str = ""
     mermaid_extension_id: str = ""
@@ -67,7 +67,7 @@ def load_config() -> AppConfig:
         parent_page_id=os.getenv("CONFLUENCE_PARENT_PAGE_ID", "").strip() or None,
         username=_required_any(["CONFLUENCE_USERNAME", "JIRA_USER_EMAIL"]),
         api_token=_required_any(["CONFLUENCE_API_TOKEN", "JIRA_API_TOKEN"]),
-        mermaid_mode=os.getenv("CONFLUENCE_MERMAID_MODE", "svg").strip() or "svg",
+        mermaid_mode=os.getenv("CONFLUENCE_MERMAID_MODE", "auto").strip() or "auto",
         mermaid_macro_name=os.getenv("CONFLUENCE_MERMAID_MACRO_NAME", "mermaid-cloud").strip() or "mermaid-cloud",
         mermaid_extension_key=os.getenv("CONFLUENCE_MERMAID_EXTENSION_KEY", "").strip(),
         mermaid_extension_id=os.getenv("CONFLUENCE_MERMAID_EXTENSION_ID", "").strip(),

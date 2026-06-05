@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Callable
+from dataclasses import replace as dc_replace
 from dataclasses import asdict
 from difflib import SequenceMatcher
 from typing import Any
@@ -129,6 +130,27 @@ def build_sync_plan(cfg: AppConfig, source: str, include_link_validation: bool =
     return out
 
 
+def _resolve_mermaid_config(confluence: ConfluenceClient, cfg: AppConfig) -> AppConfig:
+    mode = (cfg.confluence.mermaid_mode or "auto").strip().lower()
+    if mode not in {"auto", "forge_extension"}:
+        return cfg
+    if cfg.confluence.mermaid_extension_key.strip() and cfg.confluence.mermaid_extension_id.strip():
+        return cfg
+
+    discovered = confluence.discover_mermaid_extension()
+    if not discovered:
+        return cfg
+
+    confluence_cfg = dc_replace(
+        cfg.confluence,
+        mermaid_mode="forge_extension",
+        mermaid_extension_key=discovered.extension_key,
+        mermaid_extension_id=discovered.extension_id,
+        mermaid_extension_title=discovered.extension_title,
+    )
+    return dc_replace(cfg, confluence=confluence_cfg)
+
+
 def sync_documents(
     cfg: AppConfig,
     source: str,
@@ -148,6 +170,9 @@ def sync_documents(
     effective_parent = parent_page_id if parent_page_id is not None else cfg.confluence.parent_page_id
 
     confluence = ConfluenceClient(cfg.confluence)
+    cfg = _resolve_mermaid_config(confluence, cfg)
+    if cfg.confluence != confluence.cfg:
+        confluence = ConfluenceClient(cfg.confluence)
     match_context: dict[str, Any] | None = None
     if target_page_id and len(docs) != 1:
         page = confluence.get_page_by_id(target_page_id, expand="version,title,_links,body.storage,ancestors")

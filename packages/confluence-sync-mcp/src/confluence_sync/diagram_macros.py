@@ -49,6 +49,8 @@ def build_plantuml_macro(filename: str, puml_source: str, cfg: ConfluenceConfig)
 def build_mermaid_macro(diagram_source: str, cfg: ConfluenceConfig) -> str:
     diagram_source = normalize_diagram_newlines(diagram_source)
     mode = (cfg.mermaid_mode or "svg").strip().lower()
+    if mode == "auto":
+        mode = "forge_extension" if cfg.mermaid_extension_key.strip() and cfg.mermaid_extension_id.strip() else "macro"
     if mode == "macro":
         macro_name = cfg.mermaid_macro_name or "mermaid-cloud"
         return (

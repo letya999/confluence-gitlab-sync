@@ -44,6 +44,7 @@ python -m confluence_sync.server
 - Converts Markdown to Confluence storage format.
 - Resolves `.md` links to Confluence links.
 - Uploads image and PlantUML assets.
+- Supports Mermaid via auto-detected Forge extension or explicit macro mode.
 - Supports dry-run planning and safe apply.
 - Supports `source=local` and `source=gitlab`.
 
@@ -66,6 +67,23 @@ Optional flags:
 - `--codex-config /path/to/config.toml`
 - `--out /path/to/.env`
 - `--local-docs-path ./docs`
+
+## Mermaid modes
+
+The server supports three Mermaid publishing modes:
+
+- `CONFLUENCE_MERMAID_MODE=auto`
+  Best default. During sync, the server searches existing Confluence pages for a native Mermaid Forge extension
+  and reuses its `extension-key` / `extension-id`. If nothing is discovered, it falls back to the legacy macro mode.
+- `CONFLUENCE_MERMAID_MODE=forge_extension`
+  Use when your Confluence tenant renders Mermaid through `ac:adf-extension`. Set:
+  - `CONFLUENCE_MERMAID_EXTENSION_KEY`
+  - `CONFLUENCE_MERMAID_EXTENSION_ID`
+  - optional `CONFLUENCE_MERMAID_EXTENSION_TITLE`
+- `CONFLUENCE_MERMAID_MODE=macro`
+  Use only if your tenant has a working Mermaid macro such as `mermaid-cloud`.
+
+Recommendation: keep `auto` in `.env` unless you already know your tenant-specific extension identifiers.
 
 ## One-shot commands
 
