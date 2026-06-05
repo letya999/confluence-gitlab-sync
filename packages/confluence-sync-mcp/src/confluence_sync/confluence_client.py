@@ -42,7 +42,8 @@ class ConfluenceClient:
         self.session = requests.Session()
         self.session.auth = (cfg.username, cfg.api_token)
         self.session.headers.update({"Accept": "application/json", "Content-Type": "application/json"})
-        self._mermaid_extension_cache: MermaidExtension | None | bool = False
+        self._mermaid_extension_cache: MermaidExtension | None = None
+        self._mermaid_extension_discovered = False
 
     def _request(self, method: str, path: str, **kwargs: Any) -> dict[str, Any]:
         resp = self.session.request(method, f"{self.base}{path}", timeout=60, **kwargs)
@@ -153,8 +154,8 @@ class ConfluenceClient:
         )
 
     def discover_mermaid_extension(self, limit: int = 25) -> MermaidExtension | None:
-        if self._mermaid_extension_cache is not False:
-            return self._mermaid_extension_cache or None
+        if self._mermaid_extension_discovered:
+            return self._mermaid_extension_cache
 
         payload = self._request(
             "GET",
@@ -171,8 +172,10 @@ class ConfluenceClient:
             discovered = self._extract_mermaid_extension(storage_html)
             if discovered:
                 self._mermaid_extension_cache = discovered
+                self._mermaid_extension_discovered = True
                 return discovered
 
+        self._mermaid_extension_discovered = True
         self._mermaid_extension_cache = None
         return None
 

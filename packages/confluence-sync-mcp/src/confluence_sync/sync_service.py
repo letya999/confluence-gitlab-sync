@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import re
 from collections.abc import Callable
-from dataclasses import replace as dc_replace
 from dataclasses import asdict
+from dataclasses import replace as dc_replace
 from difflib import SequenceMatcher
 from typing import Any
 
