@@ -1,4 +1,13 @@
 {
   "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
-  "skills": ["confluence-gitlab-sync"]
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Documentation",
+      "description": "Sync Markdown docs into Confluence via MCP tools.",
+      "skills": [
+        "confluence-gitlab-sync"
+      ]
+    }
+  ]
 }

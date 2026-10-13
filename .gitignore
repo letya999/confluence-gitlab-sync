@@ -14,3 +14,7 @@ build/
 docs/exported/
 plans/
 skill_state/
+
+# Stale local install artifacts (old skill snapshot installed via skills CLI)
+skills/confluence-gitlab-sync/confluence-gitlab-sync/
+skills/confluence-gitlab-sync/metadata.json
