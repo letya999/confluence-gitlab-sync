@@ -1,6 +1,10 @@
 # Confluence GitLab Sync Skill
 
 English | [Русский](README.ru.md)
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="License: MIT"></a>
+  <a href="https://skills.sh/letya999/confluence-gitlab-sync"><img src="https://skills.sh/b/letya999/confluence-gitlab-sync" alt="skills.sh"></a>
+</p>
 
 Sync Markdown documentation from local folders or GitLab repositories into Confluence via MCP tools.
 
@@ -16,6 +20,12 @@ Sync Markdown documentation from local folders or GitLab repositories into Confl
 
 ```text
 $skill-installer install https://github.com/<org>/<repo>/tree/<ref>/skills/confluence-gitlab-sync
+```
+
+## Install via Skills CLI
+
+```bash
+npx skills add letya999/confluence-gitlab-sync
 ```
 
 ## Install skill in CLI hosts
